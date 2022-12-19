@@ -74,9 +74,43 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		08E4BC7A2950C2520040CDF0 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		08E4BC7B2950C25A0040CDF0 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				1FA43BD6224E569900F565CB /* Main.storyboard */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		08E4BC7C2950C2610040CDF0 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				1FA43BD4224E569900F565CB /* ViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		08E4BC7D2950C27E0040CDF0 /* Supporting File */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "Supporting File";
+			sourceTree = "<group>";
+		};
 		1FA43BC6224E569900F565CB = {
 			isa = PBXGroup;
 			children = (
+				08E4BC7D2950C27E0040CDF0 /* Supporting File */,
+				08E4BC7C2950C2610040CDF0 /* Controller */,
+				08E4BC7B2950C25A0040CDF0 /* View */,
+				08E4BC7A2950C2520040CDF0 /* Model */,
 				1FA43BD1224E569900F565CB /* CountOnMe */,
 				1FA43BE6224E569A00F565CB /* CountOnMeTests */,
 				1FA43BF1224E569A00F565CB /* CountOnMeUITests */,
@@ -98,8 +132,6 @@
 			isa = PBXGroup;
 			children = (
 				1FA43BD2224E569900F565CB /* AppDelegate.swift */,
-				1FA43BD4224E569900F565CB /* ViewController.swift */,
-				1FA43BD6224E569900F565CB /* Main.storyboard */,
 				1FA43BD9224E569A00F565CB /* Assets.xcassets */,
 				1FA43BDB224E569A00F565CB /* LaunchScreen.storyboard */,
 				1FA43BDE224E569A00F565CB /* Info.plist */,
