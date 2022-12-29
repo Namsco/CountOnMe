@@ -8,7 +8,15 @@
 
 import Foundation
 
+// MARK: - Protocol
+protocol SimpleCalcDelagate: AnyObject {
+    func didReceiveData(_ data: String)
+}
+
 class SimpleCalc {
+    
+    weak var delegate: SimpleCalcDelagate?
+    
     var textView = String()
     
     var elements: [String] {
