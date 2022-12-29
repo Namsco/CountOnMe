@@ -9,15 +9,19 @@
 import Foundation
 
 // MARK: - Protocol
-protocol SimpleCalcDelagate: AnyObject {
+protocol SimpleCalcDelegate: AnyObject {
     func didReceiveData(_ data: String)
 }
 
 class SimpleCalc {
     
-    weak var delegate: SimpleCalcDelagate?
-    
+    weak var delegate: SimpleCalcDelegate?
     var textView = String()
+    
+    func sendDataToController(data: String) {
+        delegate?.didReceiveData(data)
+        
+    }
     
     var elements: [String] {
         return textView.split(separator: " ").map { "\($0)" }
@@ -38,6 +42,19 @@ class SimpleCalc {
     
     var expressionHaveResult: Bool {
         return textView.firstIndex(of: "=") != nil
+    }
+    
+    func addNumber(number: String) {
+        if expressionHaveResult {
+            textView = ""
+        } else {
+            textView += number
+            sendDataToController(data: number)
+        }
+    }
+    
+    func additionOperator(){
+        textView.append("+")
     }
     
 }
