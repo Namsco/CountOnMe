@@ -38,6 +38,10 @@ class ViewController: UIViewController {
     @IBAction func tappedEqualButton(_ sender: UIButton) {
         simpleCalcl.calculate()
     }
+    
+    @IBAction func tappedClearErrorButton(_ sender: UIButton) {
+        simpleCalcl.clearError()
+    }
 }
 
 extension ViewController: SimpleCalcDelegate {
