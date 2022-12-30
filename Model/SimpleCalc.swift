@@ -11,6 +11,7 @@ import Foundation
 // MARK: - Protocol
 protocol SimpleCalcDelegate: AnyObject {
     func didReceiveData(_ data: String)
+    func displayAlert(_ message: String)
 }
 
 class SimpleCalc {
@@ -23,6 +24,10 @@ class SimpleCalc {
     func sendDataToController(data: String) {
         delegate?.didReceiveData(data)
         
+    }
+    
+    func sendAlertToController(message: String) {
+        delegate?.displayAlert(message)
     }
     
     var elements: [String] {
@@ -64,15 +69,14 @@ class SimpleCalc {
         textView += spacingOperation
         return sendDataToController(data: symbol)
         
-        
     }
     
     func calculate(){
         
         var operationsToReduce = elements
         
-        guard expressionIsCorrect else {return}
-        guard expressionHaveEnoughElement else {return}
+        guard expressionIsCorrect else {return sendAlertToController(message: "Entrez une expression correcte !")}
+        guard expressionHaveEnoughElement else {return sendAlertToController(message: "Démarrez un nouveau calcul !")}
         
         // Iterate over operations while an operand still here
         while operationsToReduce.count > 1 {
