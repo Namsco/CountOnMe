@@ -43,7 +43,15 @@ class SimpleCalcTests: XCTestCase {
         simpleCalc.calculate()
         simpleCalc.clearError()
         
-        
         XCTAssert(simpleCalc.textView == "")
+    }
+    
+    func testGivenClear_WhenHavingClearLastCharacter_ThenDeleteTheLastCharacterIntextView(){
+        simpleCalc.addNumber(number: "8")
+        simpleCalc.additionOperator()
+        simpleCalc.addNumber(number: "10")
+        simpleCalc.clearLastCharacter()
+        
+        XCTAssert(simpleCalc.textView == "8 + 1")
     }
 }
