@@ -68,6 +68,11 @@ class SimpleCalc {
         addOperator("-")
     }
     
+    func clearError(){
+        textView = ""
+        sendDataToController(data: textView)
+    }
+    
     func addOperator(_ symbol: String) {
         if canAddOperator {
             let spacingOperation = " " + symbol + " "
