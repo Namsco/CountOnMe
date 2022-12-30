@@ -35,4 +35,15 @@ class SimpleCalcTests: XCTestCase {
         
         XCTAssert(simpleCalc.result == -2)
     }
+    
+    func testGivenReset_WhenHavingClearError_ThenDeleteTheTextViewContent(){
+        simpleCalc.addNumber(number: "8")
+        simpleCalc.substractionOperator()
+        simpleCalc.addNumber(number: "10")
+        simpleCalc.calculate()
+        simpleCalc.clearError()
+        
+        
+        XCTAssert(simpleCalc.textView == "")
+    }
 }
