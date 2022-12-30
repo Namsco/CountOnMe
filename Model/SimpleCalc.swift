@@ -65,10 +65,13 @@ class SimpleCalc {
     }
     
     func addOperator(_ symbol: String) {
-        let spacingOperation = " " + symbol + " "
-        textView += spacingOperation
-        return sendDataToController(data: symbol)
-        
+        if canAddOperator {
+            let spacingOperation = " " + symbol + " "
+            textView += spacingOperation
+            return sendDataToController(data: symbol)
+        } else {
+            sendAlertToController(message: "Un opérateur a déjà été mis !")
+        }
     }
     
     func calculate(){

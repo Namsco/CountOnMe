@@ -30,13 +30,7 @@ class ViewController: UIViewController {
     }
     
     @IBAction func tappedAdditionButton(_ sender: UIButton) {
-        if simpleCalcl.canAddOperator {
-            simpleCalcl.additionOperator()
-        } else {
-            let alertVC = UIAlertController(title: "Zéro!", message: "Un operateur est déja mis !", preferredStyle: .alert)
-            alertVC.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
-            self.present(alertVC, animated: true, completion: nil)
-        }
+        simpleCalcl.additionOperator()
     }
     
     @IBAction func tappedSubstractionButton(_ sender: UIButton) {
@@ -52,7 +46,6 @@ class ViewController: UIViewController {
     @IBAction func tappedEqualButton(_ sender: UIButton) {
         simpleCalcl.calculate()
     }
-
 }
 
 extension ViewController: SimpleCalcDelegate {
