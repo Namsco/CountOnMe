@@ -18,6 +18,8 @@ class SimpleCalc {
     weak var delegate: SimpleCalcDelegate?
     var textView = String()
     
+    var result: Double = 0.00
+    
     func sendDataToController(data: String) {
         delegate?.didReceiveData(data)
         
@@ -54,7 +56,41 @@ class SimpleCalc {
     }
     
     func additionOperator(){
-        textView.append("+")
+        addOperator("+")
+    }
+    
+    func addOperator(_ symbol: String) {
+        let spacingOperation = " " + symbol + " "
+        textView += spacingOperation
+        return sendDataToController(data: symbol)
+        
+        
+    }
+    
+    func calculate(){
+        
+        var operationsToReduce = elements
+        
+        guard expressionIsCorrect else {return}
+        guard expressionHaveEnoughElement else {return}
+        
+        // Iterate over operations while an operand still here
+        while operationsToReduce.count > 1 {
+            let left = Double(operationsToReduce[0])!
+            let operand = operationsToReduce[1]
+            let right = Double(operationsToReduce[2])!
+            
+            switch operand {
+            case "+": result = left + right
+            case "-": result = left - right
+            default: fatalError("Unknown operator !")
+            }
+            
+            operationsToReduce = Array(operationsToReduce.dropFirst(3))
+            operationsToReduce.insert("\(result)", at: 0)
+        }
+        textView.append(" = \(operationsToReduce.first!)")
+        sendDataToController(data: textView)
     }
     
 }

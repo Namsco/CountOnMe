@@ -11,20 +11,20 @@ import XCTest
 
 class SimpleCalcTests: XCTestCase {
     var simpleCalc: SimpleCalc!
-    var viewController: ViewController!
     
     override func setUp() {
         super.setUp()
         simpleCalc = SimpleCalc()
-        viewController = ViewController()
+
     }
 
-    func testGivenAddition_WhenHavingPlusOperator_ThenPrintingtextView(){
+    func testGivenAddition_WhenHavingPlusOperator_ThenPrintingResult(){
         simpleCalc.addNumber(number: "1")
         simpleCalc.additionOperator()
-        simpleCalc.addNumber(number: "5")
+        simpleCalc.addNumber(number: "10")
+        simpleCalc.calculate()
         
-        XCTAssert(simpleCalc.textView == "1+5")
+        XCTAssert(simpleCalc.result == 11)
         
     }
 }
