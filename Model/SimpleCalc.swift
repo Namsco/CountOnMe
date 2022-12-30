@@ -73,6 +73,13 @@ class SimpleCalc {
         sendDataToController(data: textView)
     }
     
+    func clearLastCharacter() {
+        if !textView.isEmpty {
+            textView.removeLast()
+            sendDataToController(data: textView)
+        }
+    }
+    
     func addOperator(_ symbol: String) {
         if canAddOperator {
             let spacingOperation = " " + symbol + " "
