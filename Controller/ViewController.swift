@@ -42,6 +42,10 @@ class ViewController: UIViewController {
     @IBAction func tappedClearErrorButton(_ sender: UIButton) {
         simpleCalcl.clearError()
     }
+    
+    @IBAction func tappedClearLastCharacterButton(_ sender: UIButton) {
+        simpleCalcl.clearLastCharacter()
+    }
 }
 
 extension ViewController: SimpleCalcDelegate {
