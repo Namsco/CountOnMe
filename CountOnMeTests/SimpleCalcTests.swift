@@ -25,6 +25,14 @@ class SimpleCalcTests: XCTestCase {
         simpleCalc.calculate()
         
         XCTAssert(simpleCalc.result == 11)
+    }
+    
+    func testGivenSubstraction_WhenHavingLessOperator_ThenPrintingResult(){
+        simpleCalc.addNumber(number: "8")
+        simpleCalc.substractionOperator()
+        simpleCalc.addNumber(number: "10")
+        simpleCalc.calculate()
         
+        XCTAssert(simpleCalc.result == -2)
     }
 }

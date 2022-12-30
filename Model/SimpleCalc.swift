@@ -64,6 +64,10 @@ class SimpleCalc {
         addOperator("+")
     }
     
+    func substractionOperator(){
+        addOperator("-")
+    }
+    
     func addOperator(_ symbol: String) {
         if canAddOperator {
             let spacingOperation = " " + symbol + " "
