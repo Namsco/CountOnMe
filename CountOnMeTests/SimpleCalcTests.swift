@@ -54,4 +54,16 @@ class SimpleCalcTests: XCTestCase {
         
         XCTAssert(simpleCalc.textView == "8 + 1")
     }
+    
+    func testGivenNewCalculWithTheResult_WhenUsingNewOperatorAfterACalcul_ThenStartANewCalculWithTheLastResult(){
+        simpleCalc.addNumber(number: "8")
+        simpleCalc.additionOperator()
+        simpleCalc.addNumber(number: "10")
+        simpleCalc.calculate()
+        simpleCalc.additionOperator()
+        simpleCalc.addNumber(number: "10")
+        simpleCalc.calculate()
+        
+        XCTAssert(simpleCalc.result == 28)
+    }
 }
