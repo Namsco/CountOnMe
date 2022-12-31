@@ -74,6 +74,7 @@ class SimpleCalc {
     }
     
     func clearLastCharacter() {
+        guard !expressionHaveResult else {return sendAlertToController(message: "Tu ne peux pas modifier ce résultat")}
         if !textView.isEmpty {
             textView.removeLast()
             sendDataToController(data: textView)
@@ -81,12 +82,24 @@ class SimpleCalc {
     }
     
     func addOperator(_ symbol: String) {
-        if canAddOperator {
-            let spacingOperation = " " + symbol + " "
-            textView += spacingOperation
-            return sendDataToController(data: symbol)
+        if expressionHaveResult {
+            textView = ""
+            if canAddOperator {
+                let spacingOperation = " " + symbol + " "
+                textView.append("\(result)")
+                textView += spacingOperation
+                return sendDataToController(data: symbol)
+            } else {
+                sendAlertToController(message: "Un opérateur a déjà été mis !")
+            }
         } else {
-            sendAlertToController(message: "Un opérateur a déjà été mis !")
+            if canAddOperator {
+                let spacingOperation = " " + symbol + " "
+                textView += spacingOperation
+                return sendDataToController(data: symbol)
+            } else {
+                sendAlertToController(message: "Un opérateur a déjà été mis !")
+            }
         }
     }
     
@@ -106,7 +119,7 @@ class SimpleCalc {
             switch operand {
             case "+": result = left + right
             case "-": result = left - right
-            default: fatalError("Unknown operator !")
+            default: sendAlertToController(message: "Démarrez un nouveau calcul !")
             }
             
             operationsToReduce = Array(operationsToReduce.dropFirst(3))
