@@ -19,7 +19,7 @@ class SimpleCalc {
     weak var delegate: SimpleCalcDelegate?
     var textView = String()
     
-    var result: Double = 0.00
+    var result: Double = 0
     
     func sendDataToController(data: String) {
         delegate?.didReceiveData(data)
@@ -36,7 +36,7 @@ class SimpleCalc {
     
     // Error check computed variables
     var expressionIsCorrect: Bool {
-        return elements.last != "+" && elements.last != "-"
+        return elements.last != "+" && elements.last != "-" && elements.last != "x"
     }
     
     var expressionHaveEnoughElement: Bool {
@@ -44,7 +44,7 @@ class SimpleCalc {
     }
     
     var canAddOperator: Bool {
-        return elements.last != "+" && elements.last != "-"
+        return elements.last != "+" && elements.last != "-" && elements.last != "x"
     }
     
     var expressionHaveResult: Bool {
@@ -66,6 +66,10 @@ class SimpleCalc {
     
     func substractionOperator(){
         addOperator("-")
+    }
+    
+    func multiplicationOperator() {
+        addOperator("x")
     }
     
     func clearError(){
@@ -119,6 +123,7 @@ class SimpleCalc {
             switch operand {
             case "+": result = left + right
             case "-": result = left - right
+            case "x": result = left * right
             default: sendAlertToController(message: "Démarrez un nouveau calcul !")
             }
             
