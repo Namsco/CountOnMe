@@ -81,6 +81,19 @@ class SimpleCalc {
         sendDataToController(data: textView)
     }
     
+    func divisionOperation(left: Double, right: Double) -> Double{
+        if left == 0 || right == 0 {
+            textView = "Error"
+            sendDataToController(data: textView)
+            sendAlertToController(message: "You can't divide by 0 !")
+        } else {
+            result = left / right
+            result = round(10000 * result) /  10000
+            
+        }
+        return result
+    }
+    
     func clearLastCharacter() {
         guard !expressionHaveResult else {return sendAlertToController(message: "Tu ne peux pas modifier ce résultat")}
         if !textView.isEmpty {
@@ -128,14 +141,15 @@ class SimpleCalc {
             case "+": result = left + right
             case "-": result = left - right
             case "x": result = left * right
-            case "÷": result = left / right
+            case "÷": result = divisionOperation(left: left, right: right)
             default: sendAlertToController(message: "Démarrez un nouveau calcul !")
             }
             
             operationsToReduce = Array(operationsToReduce.dropFirst(3))
             operationsToReduce.insert("\(result)", at: 0)
         }
-        textView.append(" = \(operationsToReduce.first!)")
+        textView = ""
+        textView.append("\(operationsToReduce.first!)")
         sendDataToController(data: textView)
     }
     
