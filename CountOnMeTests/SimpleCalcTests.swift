@@ -36,6 +36,15 @@ class SimpleCalcTests: XCTestCase {
         XCTAssert(simpleCalc.result == -2)
     }
     
+    func testGivenMultiplication_WhenHavingMultiplyOperator_ThenPrintingResult(){
+        simpleCalc.addNumber(number: "8")
+        simpleCalc.multiplicationOperator()
+        simpleCalc.addNumber(number: "10")
+        simpleCalc.calculate()
+        
+        XCTAssert(simpleCalc.result == 80)
+    }
+    
     func testGivenReset_WhenHavingClearError_ThenDeleteTheTextViewContent(){
         simpleCalc.addNumber(number: "8")
         simpleCalc.substractionOperator()
