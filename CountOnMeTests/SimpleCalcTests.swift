@@ -73,7 +73,7 @@ class SimpleCalcTests: XCTestCase {
         XCTAssert(simpleCalc.textView == "8 + 1")
     }
     
-    func testGivenNewCalculWithTheResult_WhenUsingNewOperatorAfterACalcul_ThenStartANewCalculWithTheLastResult(){
+    func testGivenNewCalcul_WhenUsingANewOperatorAfterACalcul_ThenStartANewCalculWithTheLastResult(){
         simpleCalc.addNumber(number: "8")
         simpleCalc.additionOperator()
         simpleCalc.addNumber(number: "10")
