@@ -38,7 +38,11 @@ class ViewController: UIViewController {
     @IBAction func tappedMultiplicationButton(_ sender: UIButton) {
         simpleCalcl.multiplicationOperator()
     }
-
+    
+    @IBAction func tappedDivisionButton(_ sender: Any) {
+        simpleCalcl.divisionOperator()
+    }
+    
     @IBAction func tappedEqualButton(_ sender: UIButton) {
         simpleCalcl.calculate()
     }
