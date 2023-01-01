@@ -36,7 +36,7 @@ class SimpleCalc {
     
     // Error check computed variables
     var expressionIsCorrect: Bool {
-        return elements.last != "+" && elements.last != "-" && elements.last != "x"
+        return elements.last != "+" && elements.last != "-" && elements.last != "x" && elements.last != "÷"
     }
     
     var expressionHaveEnoughElement: Bool {
@@ -44,7 +44,7 @@ class SimpleCalc {
     }
     
     var canAddOperator: Bool {
-        return elements.last != "+" && elements.last != "-" && elements.last != "x"
+        return elements.last != "+" && elements.last != "-" && elements.last != "x" && elements.last != "÷"
     }
     
     var expressionHaveResult: Bool {
@@ -70,6 +70,10 @@ class SimpleCalc {
     
     func multiplicationOperator() {
         addOperator("x")
+    }
+    
+    func divisionOperator(){
+        addOperator("÷")
     }
     
     func clearError(){
@@ -124,6 +128,7 @@ class SimpleCalc {
             case "+": result = left + right
             case "-": result = left - right
             case "x": result = left * right
+            case "÷": result = left / right
             default: sendAlertToController(message: "Démarrez un nouveau calcul !")
             }
             
