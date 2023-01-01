@@ -45,6 +45,15 @@ class SimpleCalcTests: XCTestCase {
         XCTAssert(simpleCalc.result == 80)
     }
     
+    func testGivenDivision_WhenHavingDivisionOperator_ThenPrintingResult(){
+        simpleCalc.addNumber(number: "8")
+        simpleCalc.divisionOperator()
+        simpleCalc.addNumber(number: "4")
+        simpleCalc.calculate()
+        
+        XCTAssert(simpleCalc.result == 2)
+    }
+    
     func testGivenReset_WhenHavingClearError_ThenDeleteTheTextViewContent(){
         simpleCalc.addNumber(number: "8")
         simpleCalc.substractionOperator()
