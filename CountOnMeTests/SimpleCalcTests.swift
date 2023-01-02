@@ -10,6 +10,7 @@ import XCTest
 @testable import CountOnMe
 
 class SimpleCalcTests: XCTestCase {
+    
     var simpleCalc: SimpleCalc!
     
     override func setUp() {
@@ -94,5 +95,11 @@ class SimpleCalcTests: XCTestCase {
         XCTAssert(simpleCalc.textView == "Error")
     }
     
+    func testGivenDecimal_WhenTryingToAddTwoPoint_ThenPrintAlertMessage() {
+        simpleCalc.addNumber(number: ".")
+        simpleCalc.addNumber(number: ".")
+        
+        XCTAssertEqual(simpleCalc.result == 0.0, simpleCalc.sendAlertToController(message: "You already enter a point !") == simpleCalc.sendAlertToController(message: "You already enter a point !"))
+    }
     
 }
