@@ -55,8 +55,12 @@ class SimpleCalc {
         return elements.count >= 1
     }
     
+    var textError: Bool {
+        return textView == "Error"
+    }
+    
     func addNumber(number: String) {
-        if textView.contains(".") && number == "." {
+        if elements.last == "." && number == "." {
             sendAlertToController(message: "You already enter a point !")
         } else if expressionHaveResult {
             textView = ""
@@ -109,23 +113,16 @@ class SimpleCalc {
     }
     
     func addOperator(_ symbol: String) {
+        guard !textError else {return sendAlertToController(message: "Veuillez démarrez un nouveau calcul !")}
         let spacingOperation = " " + symbol + " "
-        if expressionHaveResult {
-            textView = ""
-            if canAddOperator && operatorIsNotAlone {
-                textView.append("\(result)")
-                textView += spacingOperation
-                return sendDataToController(data: symbol)
-            } else {
-                sendAlertToController(message: "Un opérateur a déjà été mis !")
-            }
+        if symbol == "+" && textView == "" || symbol == "-" && textView == "" {
+            textView += spacingOperation
+            return sendDataToController(data: symbol)
+        } else if canAddOperator && operatorIsNotAlone {
+            textView += spacingOperation
+            return sendDataToController(data: symbol)
         } else {
-            if canAddOperator && operatorIsNotAlone {
-                textView += spacingOperation
-                return sendDataToController(data: symbol)
-            } else {
-                sendAlertToController(message: "Un opérateur a déjà été mis !")
-            }
+            sendAlertToController(message: "Un opérateur a déjà été mis !")
         }
     }
     
@@ -138,6 +135,15 @@ class SimpleCalc {
         
         // Iterate over operations while an operand still here
         while operationsToReduce.count > 1 {
+            
+            if operationsToReduce[0] == "+" || operationsToReduce[0] == "-" {
+                let newNumber = operationsToReduce[0] + operationsToReduce[1]
+                operationsToReduce[0] = newNumber
+                operationsToReduce.remove(at: 1)
+                print("case 1")
+                print(operationsToReduce)
+            }
+        
             let left = Double(operationsToReduce[0])!
             let operand = operationsToReduce[1]
             let right = Double(operationsToReduce[2])!
@@ -153,9 +159,10 @@ class SimpleCalc {
             operationsToReduce = Array(operationsToReduce.dropFirst(3))
             operationsToReduce.insert("\(result)", at: 0)
         }
-        textView = ""
-        textView.append("\(operationsToReduce.first!)")
-        sendDataToController(data: textView)
+        if !textError {
+            textView = ""
+            textView.append("\(operationsToReduce.first!)")
+            sendDataToController(data: textView)
+        }
     }
-    
 }
