@@ -84,4 +84,15 @@ class SimpleCalcTests: XCTestCase {
         
         XCTAssert(simpleCalc.result == 28)
     }
+    
+    func testGivenDivision_WhenTryingToDiviseBy0_ThenPrintError() {
+        simpleCalc.addNumber(number: "0")
+        simpleCalc.divisionOperator()
+        simpleCalc.addNumber(number: "4")
+        simpleCalc.calculate()
+        
+        XCTAssert(simpleCalc.textView == "Error")
+    }
+    
+    
 }
