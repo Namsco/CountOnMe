@@ -51,8 +51,14 @@ class SimpleCalc {
         return textView.firstIndex(of: "=") != nil
     }
     
+    var operatorIsNotAlone: Bool {
+        return elements.count >= 1
+    }
+    
     func addNumber(number: String) {
-        if expressionHaveResult {
+        if textView.contains(".") && number == "." {
+            sendAlertToController(message: "You already enter a point !")
+        } else if expressionHaveResult {
             textView = ""
         } else {
             textView += number
@@ -103,10 +109,10 @@ class SimpleCalc {
     }
     
     func addOperator(_ symbol: String) {
+        let spacingOperation = " " + symbol + " "
         if expressionHaveResult {
             textView = ""
-            if canAddOperator {
-                let spacingOperation = " " + symbol + " "
+            if canAddOperator && operatorIsNotAlone {
                 textView.append("\(result)")
                 textView += spacingOperation
                 return sendDataToController(data: symbol)
@@ -114,8 +120,7 @@ class SimpleCalc {
                 sendAlertToController(message: "Un opérateur a déjà été mis !")
             }
         } else {
-            if canAddOperator {
-                let spacingOperation = " " + symbol + " "
+            if canAddOperator && operatorIsNotAlone {
                 textView += spacingOperation
                 return sendDataToController(data: symbol)
             } else {
