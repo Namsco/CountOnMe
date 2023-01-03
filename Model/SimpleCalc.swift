@@ -73,23 +73,8 @@ class SimpleCalc {
         }
     }
     
-    func additionOperator(){
-        addOperator("+")
-    }
-    
-    func substractionOperator(){
-        addOperator("-")
-    }
-    
-    func multiplicationOperator() {
-        addOperator("x")
-    }
-    
-    func divisionOperator(){
-        addOperator("÷")
-    }
-    
     func clearError(){
+        elementIndex = 0
         textView = ""
         sendDataToController(data: textView)
     }
@@ -111,6 +96,8 @@ class SimpleCalc {
         if !textView.isEmpty {
             textView.removeLast()
             sendDataToController(data: textView)
+        } else {
+            elementIndex = 0
         }
     }
     
@@ -147,10 +134,16 @@ class SimpleCalc {
                 print("case 1")
                 print(operationsToReduce)
             }
+            
+            var priority = 0
+            if let index = operationsToReduce.firstIndex(where: {$0 == "x" || $0 == "÷"}) {
+                priority = index - 1
+                
+            }
         
-            let left = Double(operationsToReduce[0])!
-            let operand = operationsToReduce[1]
-            let right = Double(operationsToReduce[2])!
+            guard let left = Double(operationsToReduce[priority]) else {return}
+            let operand = operationsToReduce[priority + 1]
+            guard let right = Double(operationsToReduce[priority + 2]) else {return}
             
             switch operand {
             case "+": result = left + right
@@ -160,8 +153,11 @@ class SimpleCalc {
             default: sendAlertToController(message: "Démarrez un nouveau calcul !")
             }
             
-            operationsToReduce = Array(operationsToReduce.dropFirst(3))
-            operationsToReduce.insert("\(result)", at: 0)
+            for _ in 1...3 {
+                operationsToReduce.remove(at: priority)
+            }
+            
+            operationsToReduce.insert("\(result)", at: priority)
         }
         if !textError {
             elementIndex = 0
