@@ -17,7 +17,7 @@ protocol SimpleCalcDelegate: AnyObject {
 class SimpleCalc {
 
     // MARK: - Private variables
-    private var result: Double = 0
+    var result: Double = 0
     private var elementsIndex = 0
     
     private var elements: [String] {
@@ -49,11 +49,11 @@ class SimpleCalc {
     var textView = String()
     
     // MARK: - Private functions
-    private func sendDataToController(data: String) {
+    func sendDataToController(data: String) {
         delegate?.didReceiveData(data)
     }
     
-    private func sendAlertToController(message: String) {
+    func sendAlertToController(message: String) {
         delegate?.displayAlert(message)
     }
     
@@ -143,9 +143,9 @@ class SimpleCalc {
                 priority = index - 1
             }
         
-            guard let left = Double(operationsToReduce[priority]) else {return}
+            let left = Double(operationsToReduce[priority])!
             let operand = operationsToReduce[priority + 1]
-            guard let right = Double(operationsToReduce[priority + 2]) else {return}
+            let right = Double(operationsToReduce[priority + 2])!
             
             switch operand {
             case "+": result = left + right
@@ -158,8 +158,9 @@ class SimpleCalc {
             for _ in 1...3 {
                 operationsToReduce.remove(at: priority)
             }
-            
-            operationsToReduce.insert("\(result)", at: priority)
+            var newResult = result.removeZerosFromEnd()
+            operationsToReduce.insert("\(newResult)", at: priority)
+            print(operationsToReduce)
         }
         if !textError {
             elementsIndex = 0
