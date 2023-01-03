@@ -11,14 +11,35 @@ import UIKit
 class ViewController: UIViewController {
     @IBOutlet weak var textView: UITextView!
     @IBOutlet var numberButtons: [UIButton]!
+    @IBOutlet var operatorButtons: [UIButton]!
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle{
+        .darkContent
+    }
     
     private let simpleCalcl = SimpleCalc()
-    
+
     // View Life cycles
     override func viewDidLoad() {
         super.viewDidLoad()
         simpleCalcl.delegate = self
+        makeRoundedNumbersButtons(radius: 20)
+        makeRoundedOperatorsButtons(radius: 29)
+    }
     
+    private func makeRoundedNumbersButtons(radius: CGFloat) {
+        for buttons in numberButtons {
+            buttons.layer.cornerRadius = radius
+            buttons.layer.cornerCurve = .continuous
+        }
+        textView.layer.cornerRadius = radius
+    }
+    
+    private func makeRoundedOperatorsButtons(radius: CGFloat){
+        for buttons in operatorButtons {
+            buttons.layer.cornerRadius = radius
+            buttons.layer.cornerCurve = .continuous
+        }
     }
     
     // View actions
