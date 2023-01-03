@@ -48,7 +48,7 @@ class ViewController: UIViewController {
     }
     
     @IBAction func tappedClearErrorButton(_ sender: UIButton) {
-        simpleCalcl.clearError()
+        simpleCalcl.clearTextView()
     }
     
     @IBAction func tappedClearLastCharacterButton(_ sender: UIButton) {

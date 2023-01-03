@@ -24,7 +24,6 @@ class SimpleCalc {
         return textView.split(separator: " ").map { "\($0)" }
     }
     
-    // Error check computed variables
     private var expressionIsCorrect: Bool {
         return elements.last != "+" && elements.last != "-" && elements.last != "x" && elements.last != "÷"
     }
@@ -57,6 +56,7 @@ class SimpleCalc {
     private func sendAlertToController(message: String) {
         delegate?.displayAlert(message)
     }
+    
     private func divisionOperation(left: Double, right: Double) -> Double{
         if left == 0 || right == 0 {
             textView = "Error"
@@ -64,8 +64,7 @@ class SimpleCalc {
             sendAlertToController(message: "You can't divide by 0 !")
         } else {
             result = left / right
-            result = round(10000 * result) /  10000
-            
+            result = round(10000 * result) / 10000
         }
         return result
     }
@@ -89,22 +88,27 @@ class SimpleCalc {
     }
     
     func addOperator(_ symbol: String) {
-        guard !textError else {return sendAlertToController(message: "Veuillez démarrez un nouveau calcul !")}
+        guard !textError else {return sendAlertToController(message: "Please start a new calcul !")}
         let spacingOperation = " " + symbol + " "
+        
         if symbol == "+" && textView == "" || symbol == "-" && textView == "" {
             textView += spacingOperation
             return sendDataToController(data: symbol)
+            
+        } else if symbol == "x" && textView == "" || symbol == "÷" && textView == "" {
+            sendAlertToController(message: "You can't add this operator at the start of a calcul !")
+            
         } else if canAddOperator && operatorIsNotAlone {
             textView += spacingOperation
             return sendDataToController(data: symbol)
-        } else if symbol == "x" && textView == "" || symbol == "÷" && textView == "" {
-            sendAlertToController(message: "You can't add this operator at the start of a calcul !")
+            
         } else {
-            sendAlertToController(message: "Un opérateur a déjà été mis !")
+            sendAlertToController(message: "There already have an operator !")
         }
     }
     
     func clearTextView(){
+        guard !textView.isEmpty else {return}
         elementsIndex = 0
         textView = ""
         sendDataToController(data: textView)
@@ -127,19 +131,16 @@ class SimpleCalc {
         
         // Iterate over operations while an operand still here
         while operationsToReduce.count > 1 {
+            var priority = 0
             
             if operationsToReduce[0] == "+" || operationsToReduce[0] == "-" {
                 let newNumber = operationsToReduce[0] + operationsToReduce[1]
                 operationsToReduce[0] = newNumber
                 operationsToReduce.remove(at: 1)
-                print("case 1")
-                print(operationsToReduce)
             }
             
-            var priority = 0
             if let index = operationsToReduce.firstIndex(where: {$0 == "x" || $0 == "÷"}) {
                 priority = index - 1
-                
             }
         
             guard let left = Double(operationsToReduce[priority]) else {return}
