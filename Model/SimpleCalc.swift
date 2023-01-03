@@ -13,73 +13,51 @@ protocol SimpleCalcDelegate: AnyObject {
     func didReceiveData(_ data: String)
     func displayAlert(_ message: String)
 }
-
+// MARK: - SimpleCalc class
 class SimpleCalc {
+
+    // MARK: - Private variables
+    private var result: Double = 0
+    private var elementsIndex = 0
     
-    weak var delegate: SimpleCalcDelegate?
-    var textView = String()
-    
-    var result: Double = 0
-    var elementIndex = 0
-    
-    func sendDataToController(data: String) {
-        delegate?.didReceiveData(data)
-        
-    }
-    
-    func sendAlertToController(message: String) {
-        delegate?.displayAlert(message)
-    }
-    
-    var elements: [String] {
+    private var elements: [String] {
         return textView.split(separator: " ").map { "\($0)" }
     }
     
     // Error check computed variables
-    var expressionIsCorrect: Bool {
+    private var expressionIsCorrect: Bool {
         return elements.last != "+" && elements.last != "-" && elements.last != "x" && elements.last != "÷"
     }
     
-    var expressionHaveEnoughElement: Bool {
+    private var expressionHaveEnoughElement: Bool {
         return elements.count >= 3
     }
     
-    var canAddOperator: Bool {
+    private var canAddOperator: Bool {
         return elements.last != "+" && elements.last != "-" && elements.last != "x" && elements.last != "÷"
     }
     
-    var operatorIsNotAlone: Bool {
+    private var operatorIsNotAlone: Bool {
         return elements.count >= 1
     }
     
-    var textError: Bool {
+    private var textError: Bool {
         return textView == "Error"
     }
     
-    func addNumber(number: String) {
-        if elements.count > 0 {
-            if elements[0 + elementIndex].contains(".") && number == "." {
-                sendAlertToController(message: "You already enter a point !")
-            } else {
-                textView += number
-                sendDataToController(data: number)
-            }
-        } else {
-            textView += number
-            sendDataToController(data: number)
-        }
-        if number != "." && elements.count > 1{
-            elementIndex += 1
-        }
+    // MARK: - Public variables
+    weak var delegate: SimpleCalcDelegate?
+    var textView = String()
+    
+    // MARK: - Private functions
+    private func sendDataToController(data: String) {
+        delegate?.didReceiveData(data)
     }
     
-    func clearError(){
-        elementIndex = 0
-        textView = ""
-        sendDataToController(data: textView)
+    private func sendAlertToController(message: String) {
+        delegate?.displayAlert(message)
     }
-    
-    func divisionOperation(left: Double, right: Double) -> Double{
+    private func divisionOperation(left: Double, right: Double) -> Double{
         if left == 0 || right == 0 {
             textView = "Error"
             sendDataToController(data: textView)
@@ -92,12 +70,21 @@ class SimpleCalc {
         return result
     }
     
-    func clearLastCharacter() {
-        if !textView.isEmpty {
-            textView.removeLast()
-            sendDataToController(data: textView)
+    // MARK: - Public functions
+    func addNumber(number: String) {
+        if elements.count > 0 {
+            if elements[0 + elementsIndex].contains(".") && number == "." {
+                sendAlertToController(message: "You already enter a point !")
+            } else {
+                textView += number
+                sendDataToController(data: number)
+            }
         } else {
-            elementIndex = 0
+            textView += number
+            sendDataToController(data: number)
+        }
+        if number != "." && elements.count > 1{
+            elementsIndex += 1
         }
     }
     
@@ -117,8 +104,22 @@ class SimpleCalc {
         }
     }
     
+    func clearTextView(){
+        elementsIndex = 0
+        textView = ""
+        sendDataToController(data: textView)
+    }
+    
+    func clearLastCharacter() {
+        if !textView.isEmpty {
+            textView.removeLast()
+            sendDataToController(data: textView)
+        } else {
+            elementsIndex = 0
+        }
+    }
+    
     func calculate(){
-        
         var operationsToReduce = elements
         
         guard expressionIsCorrect else {return sendAlertToController(message: "Entrez une expression correcte !")}
@@ -160,7 +161,7 @@ class SimpleCalc {
             operationsToReduce.insert("\(result)", at: priority)
         }
         if !textError {
-            elementIndex = 0
+            elementsIndex = 0
             textView = ""
             textView.append("\(operationsToReduce.first!)")
             sendDataToController(data: textView)
