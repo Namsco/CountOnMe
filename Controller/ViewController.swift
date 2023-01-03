@@ -19,7 +19,7 @@ class ViewController: UIViewController {
     // MARK: - View Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        simpleCalcl.delegate = self
+        simpleCalcl.delegate = self // This properties is equal to self for pass model's data to the view controller's.
         makeRoundedNumbersButtons(radius: 20)
         makeRoundedOperatorsButtons(radius: 29)
     }
