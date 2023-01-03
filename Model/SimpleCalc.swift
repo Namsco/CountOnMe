@@ -20,6 +20,7 @@ class SimpleCalc {
     var textView = String()
     
     var result: Double = 0
+    var elementIndex = 0
     
     func sendDataToController(data: String) {
         delegate?.didReceiveData(data)
@@ -47,10 +48,6 @@ class SimpleCalc {
         return elements.last != "+" && elements.last != "-" && elements.last != "x" && elements.last != "÷"
     }
     
-    var expressionHaveResult: Bool {
-        return textView.firstIndex(of: "=") != nil
-    }
-    
     var operatorIsNotAlone: Bool {
         return elements.count >= 1
     }
@@ -60,13 +57,19 @@ class SimpleCalc {
     }
     
     func addNumber(number: String) {
-        if elements.last == "." && number == "." {
-            sendAlertToController(message: "You already enter a point !")
-        } else if expressionHaveResult {
-            textView = ""
+        if elements.count > 0 {
+            if elements[0 + elementIndex].contains(".") && number == "." {
+                sendAlertToController(message: "You already enter a point !")
+            } else {
+                textView += number
+                sendDataToController(data: number)
+            }
         } else {
             textView += number
             sendDataToController(data: number)
+        }
+        if number != "." && elements.count > 1{
+            elementIndex += 1
         }
     }
     
@@ -105,7 +108,6 @@ class SimpleCalc {
     }
     
     func clearLastCharacter() {
-        guard !expressionHaveResult else {return sendAlertToController(message: "Tu ne peux pas modifier ce résultat")}
         if !textView.isEmpty {
             textView.removeLast()
             sendDataToController(data: textView)
@@ -121,6 +123,8 @@ class SimpleCalc {
         } else if canAddOperator && operatorIsNotAlone {
             textView += spacingOperation
             return sendDataToController(data: symbol)
+        } else if symbol == "x" && textView == "" || symbol == "÷" && textView == "" {
+            sendAlertToController(message: "You can't add this operator at the start of a calcul !")
         } else {
             sendAlertToController(message: "Un opérateur a déjà été mis !")
         }
@@ -160,6 +164,7 @@ class SimpleCalc {
             operationsToReduce.insert("\(result)", at: 0)
         }
         if !textError {
+            elementIndex = 0
             textView = ""
             textView.append("\(operationsToReduce.first!)")
             sendDataToController(data: textView)
