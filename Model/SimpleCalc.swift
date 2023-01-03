@@ -15,7 +15,7 @@ protocol SimpleCalcDelegate: AnyObject {
 }
 // MARK: - SimpleCalc class
 class SimpleCalc {
-
+    
     // MARK: - Private variables
     var result: Double = 0
     private var elementsIndex = 0
@@ -71,6 +71,7 @@ class SimpleCalc {
     
     // MARK: - Public functions
     func addNumber(number: String) {
+        guard !textError else {return sendAlertToController(message: "Please start a new calcul !")}
         if elements.count > 0 {
             if elements[0 + elementsIndex].contains(".") && number == "." {
                 sendAlertToController(message: "You already enter a point !")
@@ -115,6 +116,7 @@ class SimpleCalc {
     }
     
     func clearLastCharacter() {
+        guard !textError else {return sendAlertToController(message: "Please start a new calcul !")}
         if !textView.isEmpty {
             textView.removeLast()
             sendDataToController(data: textView)
@@ -142,7 +144,7 @@ class SimpleCalc {
             if let index = operationsToReduce.firstIndex(where: {$0 == "x" || $0 == "÷"}) {
                 priority = index - 1
             }
-        
+            
             let left = Double(operationsToReduce[priority])!
             let operand = operationsToReduce[priority + 1]
             let right = Double(operationsToReduce[priority + 2])!
@@ -158,15 +160,22 @@ class SimpleCalc {
             for _ in 1...3 {
                 operationsToReduce.remove(at: priority)
             }
-            var newResult = result.removeZerosFromEnd()
-            operationsToReduce.insert("\(newResult)", at: priority)
-            print(operationsToReduce)
-        }
-        if !textError {
-            elementsIndex = 0
-            textView = ""
-            textView.append("\(operationsToReduce.first!)")
-            sendDataToController(data: textView)
+            let newResult = result.removeZerosFromEnd()
+            var resultWithQuote = String()
+            if newResult.contains(","){
+                resultWithQuote = newResult.replacingOccurrences(of: ",", with: ".")
+            } else {
+                resultWithQuote = newResult
+            }
+            
+            operationsToReduce.insert("\(resultWithQuote)", at: priority)
+            
+            if !textError {
+                elementsIndex = 0
+                textView = ""
+                textView.append("\(operationsToReduce.first!)")
+                sendDataToController(data: textView)
+            }
         }
     }
 }
