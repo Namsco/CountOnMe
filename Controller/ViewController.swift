@@ -28,19 +28,19 @@ class ViewController: UIViewController {
     }
     
     @IBAction func tappedAdditionButton(_ sender: UIButton) {
-        simpleCalcl.additionOperator()
+        simpleCalcl.addOperator("+")
     }
     
     @IBAction func tappedSubstractionButton(_ sender: UIButton) {
-        simpleCalcl.substractionOperator()
+        simpleCalcl.addOperator("-")
     }
     
     @IBAction func tappedMultiplicationButton(_ sender: UIButton) {
-        simpleCalcl.multiplicationOperator()
+        simpleCalcl.addOperator("x")
     }
     
-    @IBAction func tappedDivisionButton(_ sender: Any) {
-        simpleCalcl.divisionOperator()
+    @IBAction func tappedDivisionButton(_ sender: UIButton) {
+        simpleCalcl.addOperator("÷")
     }
     
     @IBAction func tappedEqualButton(_ sender: UIButton) {
