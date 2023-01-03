@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		085326F8296483A3003B62BF /* removeZerosFromEnd.swift in Sources */ = {isa = PBXBuildFile; fileRef = 085326F7296483A3003B62BF /* removeZerosFromEnd.swift */; };
+		085326FA2964BB5B003B62BF /* simpleCalcDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 085326F92964BB5B003B62BF /* simpleCalcDelegate.swift */; };
 		0853781A2950CA7B005CD1A7 /* SimpleCalc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 085378192950CA7B005CD1A7 /* SimpleCalc.swift */; };
 		1FA43BD3224E569900F565CB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FA43BD2224E569900F565CB /* AppDelegate.swift */; };
 		1FA43BD5224E569900F565CB /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FA43BD4224E569900F565CB /* ViewController.swift */; };
@@ -37,6 +38,7 @@
 
 /* Begin PBXFileReference section */
 		085326F7296483A3003B62BF /* removeZerosFromEnd.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = removeZerosFromEnd.swift; sourceTree = "<group>"; };
+		085326F92964BB5B003B62BF /* simpleCalcDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = simpleCalcDelegate.swift; sourceTree = "<group>"; };
 		085378192950CA7B005CD1A7 /* SimpleCalc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleCalc.swift; sourceTree = "<group>"; };
 		1FA43BCF224E569900F565CB /* CountOnMe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CountOnMe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1FA43BD2224E569900F565CB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -82,6 +84,7 @@
 			isa = PBXGroup;
 			children = (
 				085326F7296483A3003B62BF /* removeZerosFromEnd.swift */,
+				085326F92964BB5B003B62BF /* simpleCalcDelegate.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -302,6 +305,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				085326FA2964BB5B003B62BF /* simpleCalcDelegate.swift in Sources */,
 				0853781A2950CA7B005CD1A7 /* SimpleCalc.swift in Sources */,
 				1FA43BD5224E569900F565CB /* ViewController.swift in Sources */,
 				1FA43BD3224E569900F565CB /* AppDelegate.swift in Sources */,

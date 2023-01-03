@@ -7,19 +7,16 @@
 //
 
 import UIKit
-
+// MARK: - View Controller's class
 class ViewController: UIViewController {
-    @IBOutlet weak var textView: UITextView!
-    @IBOutlet var numberButtons: [UIButton]!
-    @IBOutlet var operatorButtons: [UIButton]!
     
+    // MARK: - Public properties
     override var preferredStatusBarStyle: UIStatusBarStyle{
         .darkContent
     }
+    let simpleCalcl = SimpleCalc()
     
-    private let simpleCalcl = SimpleCalc()
-
-    // View Life cycles
+    // MARK: - View Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         simpleCalcl.delegate = self
@@ -27,6 +24,12 @@ class ViewController: UIViewController {
         makeRoundedOperatorsButtons(radius: 29)
     }
     
+    // MARK: - Properties connected to storoyboard
+    @IBOutlet weak var textView: UITextView!
+    @IBOutlet var numberButtons: [UIButton]!
+    @IBOutlet var operatorButtons: [UIButton]!
+    
+    // MARK: - Private functions
     private func makeRoundedNumbersButtons(radius: CGFloat) {
         for buttons in numberButtons {
             buttons.layer.cornerRadius = radius
@@ -42,7 +45,7 @@ class ViewController: UIViewController {
         }
     }
     
-    // View actions
+    // MARK: - View's actions methods
     @IBAction func tappedNumberButton(_ sender: UIButton) {
         guard let numberText = sender.title(for: .normal) else { return }        
         simpleCalcl.addNumber(number: numberText)
@@ -76,17 +79,3 @@ class ViewController: UIViewController {
         simpleCalcl.clearLastCharacter()
     }
 }
-
-extension ViewController: SimpleCalcDelegate {
-    
-    func didReceiveData(_ data: String) {
-        textView.text = simpleCalcl.textView
-    }
-    
-    func displayAlert(_ message: String) {
-        let alertVC = UIAlertController(title: "Zéro!", message: message, preferredStyle: .alert)
-        alertVC.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
-        return self.present(alertVC, animated: true, completion: nil)
-    }
-}
-
