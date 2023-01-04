@@ -19,6 +19,7 @@ class SimpleCalc {
     // MARK: - Private variables
     var result: Double = 0
     private var elementsIndex: Int!
+    var messageTest = String()
     
     private var elements: [String] {
         return textView.split(separator: " ").map { "\($0)" }
@@ -55,6 +56,7 @@ class SimpleCalc {
     
     func sendAlertToController(message: String) {
         delegate?.displayAlert(message)
+        messageTest = message
     }
     
     // We created a divisionOperation function to control if the number is divide by 0.
@@ -128,7 +130,7 @@ class SimpleCalc {
         var operationsToReduce = elements
         
         guard expressionIsCorrect else {return sendAlertToController(message: "Please enter a correct expression !")}
-        guard expressionHaveEnoughElement else {return sendAlertToController(message: "Please start a new calcul !")}
+        guard expressionHaveEnoughElement else {return sendAlertToController(message: "Your expression isn't correct, please enter more elements !")}
         
         // Iterate over operations while an operand still here
         while operationsToReduce.count > 1 {
