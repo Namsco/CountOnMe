@@ -125,7 +125,7 @@ class SimpleCalcTests: XCTestCase {
         simpleCalc.addNumber(number: "15")
         simpleCalc.calculate()
         
-        XCTAssert(simpleCalc.textView == "16.5")
+        XCTAssert(simpleCalc.result == 16.5)
     }
     
     func testGivenCalculate_WhenHavingSomeDecimalNumbers_ThenPrintResult() {
