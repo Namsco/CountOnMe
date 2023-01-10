@@ -17,7 +17,6 @@ class SimpleCalcTests: XCTestCase {
     override func setUp() {
         super.setUp()
         simpleCalc = SimpleCalc()
-
     }
 
     // MARK: - Test for functions call by buttons
@@ -97,92 +96,27 @@ class SimpleCalcTests: XCTestCase {
         
         XCTAssert(simpleCalc.result == 3)
     }
-
-    // MARK: - Test Errors
-    func testGivenDivision_WhenTryingToDiviseByZero_ThenPrintError() {
-        simpleCalc.addNumber(number: "0")
-        simpleCalc.addOperator("÷")
-        simpleCalc.addNumber(number: "4")
-        simpleCalc.calculate()
-        
-        XCTAssert(simpleCalc.textView == "Error")
-    }
     
-    func testGivenAddNumber_WhenTextIsError_ThenSendAlert() {
-        simpleCalc.textView = "Error"
-        simpleCalc.addNumber(number: "3")
-        
-        XCTAssertEqual(simpleCalc.result == 0.0, simpleCalc.messageTest == "Please start a new calcul !")
-    }
-
-    func testGivenDecimal_WhenTryToAddTwoPoint_ThenPrintAlertMessage() {
-        simpleCalc.addNumber(number: ".")
-        simpleCalc.addNumber(number: ".")
-        
-        XCTAssertEqual(simpleCalc.result == 0.0, simpleCalc.messageTest == "You already enter a point !")
-    }
-    
-    func testGivenAddOperator_WhenTextViewIsEqualAtError_ThenSendAnAlert() {
-        simpleCalc.textView = "Error"
-        simpleCalc.addOperator("+")
-        
-        XCTAssertEqual(simpleCalc.result == 0.0, simpleCalc.messageTest == "Please start a new calcul !")
-        
-    }
-    
-    func testGivenAddOperator_WhenAlreadyHaveAnOperator_ThenSendAnAlert() {
+    func testGivenCalculate_WhenHavingMultiplicationPriority_ThenPrintResult() {
         simpleCalc.addNumber(number: "5")
+        simpleCalc.addOperator("+")
+        simpleCalc.addNumber(number: "8")
         simpleCalc.addOperator("x")
-        simpleCalc.addOperator("x")
+        simpleCalc.addNumber(number: "2")
+        simpleCalc.calculate()
         
-        XCTAssertEqual(simpleCalc.result == 0.0, simpleCalc.messageTest == "There already have an operator !")
+        XCTAssert(simpleCalc.result == 21)
     }
     
-    func testGivenAddedMultiplyOperator_WhenStartingACalcul_ThenSendAnAlert() {
-        simpleCalc.addOperator("x")
-        
-        XCTAssertEqual(simpleCalc.result == 0.0, simpleCalc.messageTest == "You can't add this operator at the start of a calcul !")
-    }
-    
-    func testGivenAddedDivisionOperator_WhenStartingACalcul_ThenSendAnAlert() {
+    func testGivenCalculate_WhenHavingDivisionPriority_ThenPrintResult() {
+        simpleCalc.addNumber(number: "5")
+        simpleCalc.addOperator("+")
+        simpleCalc.addNumber(number: "8")
         simpleCalc.addOperator("÷")
-        
-        XCTAssertEqual(simpleCalc.result == 0.0, simpleCalc.messageTest == "You can't add this operator at the start of a calcul !")
-    }
-    
-    func testGivenClearTextView_WhenTextViewIsEmpty_ThenSendAlert() {
-        simpleCalc.clearTextView()
-    
-        XCTAssertEqual(simpleCalc.result == 0.0, simpleCalc.messageTest == "There are no content to remove !")
-        
-    }
-    
-    func testGivenClearLastCharacter_WhenTextIsError_ThenSendAlert() {
-        simpleCalc.textView = "Error"
-        simpleCalc.clearLastCharacter()
-        
-        XCTAssertEqual(simpleCalc.result == 0.0, simpleCalc.messageTest == "Please start a new calcul !")
-    }
-    
-    func testGivenClearLastCharacter_WhenTextViewIsEmpty_ThenSendAlert() {
-        simpleCalc.clearLastCharacter()
-    
-        XCTAssertEqual(simpleCalc.result == 0.0, simpleCalc.messageTest == "There are no content to remove !")
-        
-    }
-    
-    func testGivenCalculate_WhenExpressionIsntCorrect_ThenSendAnAlert() {
-        simpleCalc.addNumber(number: "4")
-        simpleCalc.addOperator("x")
+        simpleCalc.addNumber(number: "2")
         simpleCalc.calculate()
         
-        XCTAssertEqual(simpleCalc.result == 0.0, simpleCalc.messageTest == "Please enter a correct expression !")
-    }
-    
-    func testGivenCalculate_WhenExpressionHaventEnoughElement_ThenSendAnAlert() {
-        simpleCalc.calculate()
-        
-        XCTAssertEqual(simpleCalc.result == 0.0, simpleCalc.messageTest == "Your expression isn't correct, please enter more elements !")
+        XCTAssert(simpleCalc.result == 9)
     }
     
     func testGivenCalculate_WhenHavingDecimalNumber_ThenCommaIsReplacedByADot() {
@@ -192,5 +126,154 @@ class SimpleCalcTests: XCTestCase {
         simpleCalc.calculate()
         
         XCTAssert(simpleCalc.textView == "16.5")
+    }
+    
+    func testGivenCalculate_WhenHavingSomeDecimalNumbers_ThenPrintResult() {
+        simpleCalc.addNumber(number: "5.4")
+        simpleCalc.addOperator("+")
+        simpleCalc.addNumber(number: "5.467")
+        simpleCalc.addOperator("x")
+        simpleCalc.addNumber(number: "3.41")
+        simpleCalc.calculate()
+        
+        XCTAssert(simpleCalc.result == 24.04247)
+    }
+    
+    func testGivenCalculate_ChenHavingSomeOperators_ThenPrintResult() {
+        simpleCalc.addOperator("-")
+        simpleCalc.addNumber(number: "2")
+        simpleCalc.addOperator("+")
+        simpleCalc.addNumber(number: "9")
+        simpleCalc.addOperator("x")
+        simpleCalc.addNumber(number: "2")
+        simpleCalc.addOperator("÷")
+        simpleCalc.addNumber(number: "5")
+        simpleCalc.addOperator("-")
+        simpleCalc.addNumber(number: "2")
+        simpleCalc.calculate()
+        
+        XCTAssert(simpleCalc.textView == "-0.4")
+    }
+    
+    func testGivenCalculate_WhenHavingBigNumbers_ThenPrintResult() {
+        simpleCalc.addNumber(number: "12893")
+        simpleCalc.addOperator("x")
+        simpleCalc.addNumber(number: "123.67")
+        simpleCalc.addOperator("-")
+        simpleCalc.addNumber(number: "2389.928")
+        simpleCalc.addOperator("+")
+        simpleCalc.addNumber(number: "3638293")
+        simpleCalc.calculate()
+        
+        XCTAssert(simpleCalc.result == 5230380.382)
+    
+    }
+
+    // MARK: - Test Errors
+    func testGivenDivision_WhenTryingToDiviseByZero_ThenPrintError() {
+        simpleCalc.addNumber(number: "4")
+        simpleCalc.addOperator("÷")
+        simpleCalc.addNumber(number: "0")
+        simpleCalc.calculate()
+        
+        XCTAssert(simpleCalc.textView == "Error")
+    }
+    
+    func testGivenDivision_WhenTryingToDiviseZero_ThenPrintResult() {
+        simpleCalc.addNumber(number: "0")
+        simpleCalc.addOperator("÷")
+        simpleCalc.addNumber(number: "4")
+        simpleCalc.calculate()
+        
+        XCTAssert(simpleCalc.result == 0)
+    }
+    
+    
+    func testGivenAddNumber_WhenTextIsError_ThenSendAlert() {
+        simpleCalc.textView = "Error"
+        simpleCalc.addNumber(number: "3")
+        
+        XCTAssertTrue(simpleCalc.messageTest == "Please start a new calcul !")
+        XCTAssertEqual(simpleCalc.result, 0.0)
+    }
+
+    func testGivenDecimal_WhenTryToAddTwoPoint_ThenPrintAlertMessage() {
+        simpleCalc.addNumber(number: ".")
+        simpleCalc.addNumber(number: ".")
+        
+        XCTAssertTrue(simpleCalc.messageTest == "You already enter a point !")
+        XCTAssertEqual(simpleCalc.result, 0.0)
+    }
+    
+    func testGivenAddOperator_WhenTextViewIsEqualAtError_ThenSendAnAlert() {
+        simpleCalc.textView = "Error"
+        simpleCalc.addOperator("+")
+        
+        XCTAssertTrue(simpleCalc.messageTest == "Please start a new calcul !")
+        XCTAssertEqual(simpleCalc.result, 0.0)
+        
+    }
+    
+    func testGivenAddOperator_WhenAlreadyHaveAnOperator_ThenSendAnAlert() {
+        simpleCalc.addNumber(number: "5")
+        simpleCalc.addOperator("x")
+        simpleCalc.addOperator("x")
+        
+        XCTAssertTrue(simpleCalc.messageTest == "There already have an operator !")
+        XCTAssertEqual(simpleCalc.result, 0.0)
+    }
+    
+    func testGivenAddedMultiplyOperator_WhenStartingACalcul_ThenSendAnAlert() {
+        simpleCalc.addOperator("x")
+        
+        XCTAssertTrue(simpleCalc.messageTest == "You can't add this operator at the start of a calcul !")
+        XCTAssertEqual(simpleCalc.result, 0.0)
+    }
+    
+    func testGivenAddedDivisionOperator_WhenStartingACalcul_ThenSendAnAlert() {
+        simpleCalc.addOperator("÷")
+        
+        XCTAssertTrue(simpleCalc.messageTest == "You can't add this operator at the start of a calcul !")
+        XCTAssertEqual(simpleCalc.result, 0.0)
+    }
+    
+    func testGivenClearTextView_WhenTextViewIsEmpty_ThenSendAlert() {
+        simpleCalc.clearTextView()
+    
+        XCTAssertTrue(simpleCalc.messageTest == "There are no content to remove !")
+        XCTAssertEqual(simpleCalc.result, 0.0)
+        
+    }
+    
+    func testGivenClearLastCharacter_WhenTextIsError_ThenSendAlert() {
+        simpleCalc.textView = "Error"
+        simpleCalc.clearLastCharacter()
+        
+        XCTAssertTrue(simpleCalc.messageTest == "Please start a new calcul !")
+        XCTAssertEqual(simpleCalc.result, 0.0)
+    }
+    
+    func testGivenClearLastCharacter_WhenTextViewIsEmpty_ThenSendAlert() {
+        simpleCalc.clearLastCharacter()
+    
+        XCTAssertTrue(simpleCalc.messageTest == "There are no content to remove !")
+        XCTAssertEqual(simpleCalc.result, 0.0)
+        
+    }
+    
+    func testGivenCalculate_WhenExpressionIsntCorrect_ThenSendAnAlert() {
+        simpleCalc.addNumber(number: "4")
+        simpleCalc.addOperator("x")
+        simpleCalc.calculate()
+        
+        XCTAssertTrue(simpleCalc.messageTest == "Please enter a correct expression !")
+        XCTAssertEqual(simpleCalc.result, 0.0)
+    }
+    
+    func testGivenCalculate_WhenExpressionHaventEnoughElement_ThenSendAnAlert() {
+        simpleCalc.calculate()
+        
+        XCTAssertTrue(simpleCalc.messageTest == "Your expression isn't correct, please enter more elements !")
+        XCTAssertEqual(simpleCalc.result, 0.0)
     }
 }
