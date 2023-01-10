@@ -61,7 +61,7 @@ class SimpleCalc {
     
     // We created a divisionOperation function to control if the number is divide by 0.
     private func divisionOperation(left: Double, right: Double) -> Double{
-        if left == 0 || right == 0 {
+        if right == 0 {
             textView = "Error"
             sendDataToController(data: textView)
             sendAlertToController(message: "You can't divide by 0 !")
